@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from './Login.module.css';
+import styles from '@/app/(auth)/login/Login.module.css';
 
 export default function LoginPage() {
     const router = useRouter();
@@ -11,9 +11,9 @@ export default function LoginPage() {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        // 간단한 예시: 아이디와 비밀번호가 모두 입력되면 관리자 영역으로 이동
+        // 아이디와 비밀번호가 모두 입력되면 관리자 영역으로 이동
         if (username && password) {
-            router.push('/admin');
+            router.push('/admin'); // '/admin'으로 이동 (괄호 제외)
         } else {
             alert('아이디와 비밀번호를 모두 입력하세요.');
         }
