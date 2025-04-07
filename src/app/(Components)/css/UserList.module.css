@@ -1,0 +1,295 @@
+.container {
+    padding: 2rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #2d3748;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.searchInput {
+    width: 300px;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.registerBtn {
+    background-color: #3182ce;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.registerBtn:hover {
+    background-color: #2b6cb0;
+}
+
+.memberTable {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.memberTable th {
+    background-color: #1f2937;
+    color: white;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.memberTable td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #eee;
+}
+
+.tableRow:hover {
+    background-color: #f1f5f9;
+    cursor: pointer;
+}
+
+.detailForm {
+    margin-top: 2rem;
+    background-color: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.detailHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.closeButton {
+    background-color: #e53e3e;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.closeButton:hover {
+    background-color: #c53030;
+}
+
+.formRow {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.formRow label {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: #2d3748;
+}
+
+.formRow input,
+.formRow select {
+    padding: 0.5rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+}
+
+.submitButton {
+    background-color: #3182ce;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-top: 1rem;a/* 등록/상세 정보 박스 */
+.detailForm {
+    margin-top: 2rem;
+    background-color: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 10px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+    /* 반응형 폼 구조 */
+    .responsiveForm {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    /* 폼의 한 줄 */
+    .formRow {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* 라벨 스타일 */
+    .formRow label {
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        color: #2d3748;
+    }
+
+    /* input, select 공통 스타일 */
+    .formRow input,
+    .formRow select {
+        padding: 0.5rem;
+        border: 1px solid #cbd5e0;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        background-color: white;
+    }
+
+    /* 버튼 행 */
+    .buttonRow {
+        display: flex;
+        justify-content: flex-end; /* 기본은 오른쪽 정렬 */
+        margin-top: 1rem;
+    }
+
+    /* 작은 화면에서는 버튼을 꽉 차게 */
+    @media (max-width: 600px) {
+        .detailForm {
+            padding: 1rem;
+        }
+
+        .buttonRow {
+            justify-content: center;
+        }
+
+        .submitButton {
+            width: 100%;
+        }
+    }
+
+    /* 제출 버튼 */
+    .submitButton {
+        background-color: #3182ce;
+        color: white;
+        border: none;
+        padding: 0.6rem 1.5rem;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .submitButton:hover {
+        background-color: #2b6cb0;
+    }
+
+    cursor: pointer;
+}
+.submitButton:hover {
+    background-color: #2b6cb0;
+}
+.buttonRow {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+    .buttonRow {
+        justify-content: center;
+    }
+
+    .submitButton {
+        width: 100%;
+    }
+}
+
+/* ✅ 상세/등록 폼 전체 박스 */
+.detailForm {
+    margin-top: 2rem;
+    background-color: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 10px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* ✅ 폼 구조 */
+.responsiveForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.formRow {
+    display: flex;
+    flex-direction: column;
+}
+
+.formRow label {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: #2d3748;
+}
+
+.formRow input,
+.formRow select {
+    padding: 0.5rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    background-color: white;
+}
+
+/* ✅ 버튼 정렬 */
+.buttonRow {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.submitButton {
+    background-color: #3182ce;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.submitButton:hover {
+    background-color: #2b6cb0;
+}
+
+/* ✅ 반응형 대응 */
+@media (max-width: 600px) {
+    .detailForm {
+        padding: 1rem;
+    }
+
+    .buttonRow {
+        justify-content: center;
+    }
+
+    .submitButton {
+        width: 100%;
+    }
+}
