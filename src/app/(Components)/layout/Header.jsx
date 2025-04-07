@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styles from '@/app/admin/css/Header.module.css';
+import styles from '@/app/(Components)/css/Header.module.css';
 
 export default function Header({ toggleNavbar }) {
     return (
@@ -8,7 +8,7 @@ export default function Header({ toggleNavbar }) {
             <button className={styles.menuToggle} onClick={toggleNavbar}>
                 ☰
             </button>
-            <Link href="/admin" className={styles.logo}>
+            <Link href="/dashboard" className={styles.logo}>
                 HLB academy
             </Link>
             <div className={styles.userInfo}>
