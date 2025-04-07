@@ -1,0 +1,137 @@
+/* 기본 폰트 및 레이아웃 */
+.navbar {
+    width: 250px;
+    background-color: #1f2937;
+    padding: 1.2rem;
+    box-sizing: border-box;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    bottom: 0;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    user-select: none;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menuItem {
+    margin-bottom: 0.8rem;
+}
+
+.menuButton {
+    background: none;
+    border: none;
+    color: #cbd5e0;
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.7rem 1rem;
+    border-radius: 6px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.menuButton:hover {
+    background-color: #4b5568;
+    color: #fff;
+}
+
+.icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.chevron {
+    margin-left: auto;
+    font-size: 0.9rem;
+    color: #a0aec0;
+}
+
+.submenu {
+    list-style: none;
+    padding: 0.3rem 0 0 1.2rem;
+    user-select: none;
+}
+
+.submenuItem {
+    margin: 0.3rem 0;
+}
+
+.link {
+    color: #cbd5e0;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: block;
+    padding: 0.45rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.link:hover {
+    background-color: #4b5563;
+    color: #ffffff;
+}
+
+.activeLink {
+    background-color: #3182ce;
+    color: white;
+    font-weight: 500;
+    user-select: none;
+    outline: none;
+
+}
+
+.activeLink:focus {
+    outline: none;
+}
+.link,
+.activeLink {
+    display: block;
+    font-weight: 500;             /* 고정 */
+    font-size: 0.95rem;
+    text-decoration: none;
+    color: #cbd5e0;
+    padding: 0.45rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    outline: none !important;    /* 클릭 시 파란 라인 제거 */
+    text-align: left;            /* 혹시 몰라 방향 고정 */
+}
+
+.link:hover {
+    background-color: #4b5563;
+    color: #ffffff;
+}
+
+.activeLink {
+    background-color: #3182ce;
+    color: #ffffff;
+    font-weight: 500;            /* 일반 상태와 동일하게 유지 */
+}
+
+.activeLink:focus {
+    outline: none !important;    /* 포커스 시 변화 방지 */
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .navbar {
+        transform: translateX(-100%);
+        z-index: 1000;
+    }
+
+    .navbar.open {
+        transform: translateX(0);
+    }
+}
