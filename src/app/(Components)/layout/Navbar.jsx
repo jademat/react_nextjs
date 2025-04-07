@@ -142,7 +142,7 @@ export default function Navbar({ isOpen, toggleNavbar }) {
                                     className={isActive('/survey/list') ? styles.activeLink : styles.link}
                                     onClick={toggleNavbar}
                                 >
-                                    관리
+                                   설문 관리
                                 </Link>
                             </li>
                             <li className={styles.submenuItem}>
