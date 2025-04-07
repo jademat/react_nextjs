@@ -11,8 +11,9 @@
 
 .toolbar {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     margin-bottom: 1rem;
+    gap: 1rem;
 }
 
 .searchInput {
@@ -22,13 +23,37 @@
     border-radius: 6px;
 }
 
+.registerBtn {
+    background-color: #3182ce;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.registerBtn:hover {
+    background-color: #2b6cb0;
+}
+
+.wrapper {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.tableWrapper {
+    flex: 1;
+    min-width: 500px;
+}
+
 .lectureTable {
     width: 100%;
     border-collapse: collapse;
     background: white;
+    border-radius: 6px;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-    border-radius: 8px;
-    overflow: hidden;
 }
 
 .lectureTable th {
@@ -49,51 +74,144 @@
 }
 
 .detailBox {
-    margin-top: 2rem;
+    flex: 1;
+    min-width: 400px;
     background-color: #f9fafb;
     padding: 1.5rem;
     border-radius: 10px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.detailHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.detailContent {
+.formLayout {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
 }
 
-.closeBtn {
-    background-color: #e53e3e;
-    color: white;
-    border: none;
-    padding: 0.4rem 0.8rem;
-    border-radius: 5px;
-    cursor: pointer;
+.formRow {
+    display: flex;
+    flex-direction: column;
 }
-.closeBtn:hover {
-    background-color: #c53030;
+
+.formRow label {
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: #2d3748;
+}
+
+.formRow input {
+    padding: 0.5rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    background-color: white;
+}
+
+.applicantList {
+    list-style: disc;
+    margin-left: 1.2rem;
+    padding-left: 0.5rem;
+    color: #2d3748;
+}
+
+.buttonRow {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.submitButton,
+.closeButton,
+.cancelBtn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.submitButton {
+    background-color: #3182ce;
+    color: white;
+}
+.submitButton:hover {
+    background-color: #2b6cb0;
+}
+
+.closeButton {
+    background-color: #718096;
+    color: white;
+}
+.closeButton:hover {
+    background-color: #4a5568;
 }
 
 .cancelBtn {
-    margin-top: 1rem;
-    background-color: #ed8936;
+    background-color: #e53e3e;
     color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
 }
 .cancelBtn:hover {
-    background-color: #dd6b20;
+    background-color: #c53030;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .tableWrapper,
+    .detailBox {
+        min-width: 100%;
+    }
+
+    .buttonRow {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .submitButton,
+    .closeButton,
+    .cancelBtn {
+        width: 100%;
+    }
+}
+.applicantSection {
+    margin-top: 2rem;
+}
+
+.applicantSection h3 {
+    font-size: 1.2rem;
+    color: #2d3748;
+    margin-bottom: 0.8rem;
+}
+
+.applicantTable {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.applicantTable th {
+    background-color: #4a5568;
+    color: #ffffff;
+    padding: 0.6rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+.applicantTable td {
+    padding: 0.6rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #2d3748;
+    font-size: 0.95rem;
+}
+
+.applicantTable tr:hover {
+    background-color: #f7fafc;
 }

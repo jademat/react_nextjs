@@ -22,7 +22,7 @@ export default function Navbar({ isOpen, toggleNavbar }) {
         if (['/course/list', '/lectures'].includes(pathname)) {
             setOpenMenus((prev) => ({ ...prev, system: true }));
         }
-        if (['/asd', '/abc'].includes(pathname)) {
+        if (['/survey/list', '/abc'].includes(pathname)) {
             setOpenMenus((prev) => ({ ...prev, survey: true }));
         }
     }, [pathname]);
@@ -138,8 +138,8 @@ export default function Navbar({ isOpen, toggleNavbar }) {
                         <ul className={styles.submenu}>
                             <li className={styles.submenuItem}>
                                 <Link
-                                    href="/asd"
-                                    className={isActive('/asd') ? styles.activeLink : styles.link}
+                                    href="/survey/list"
+                                    className={isActive('/survey/list') ? styles.activeLink : styles.link}
                                     onClick={toggleNavbar}
                                 >
                                     관리
