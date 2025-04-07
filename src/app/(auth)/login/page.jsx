@@ -13,7 +13,7 @@ export default function LoginPage() {
         e.preventDefault();
         // 아이디와 비밀번호가 모두 입력되면 관리자 영역으로 이동
         if (username && password) {
-            router.push('/admin'); // '/admin'으로 이동 (괄호 제외)
+            router.push('/dashboard');
         } else {
             alert('아이디와 비밀번호를 모두 입력하세요.');
         }
