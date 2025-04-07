@@ -1,0 +1,99 @@
+.container {
+    padding: 2rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #2d3748;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.searchInput {
+    padding: 0.5rem 1rem;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.lectureTable {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.lectureTable th {
+    background-color: #1f2937;
+    color: white;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.lectureTable td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #eee;
+}
+
+.tableRow:hover {
+    background-color: #f1f5f9;
+    cursor: pointer;
+}
+
+.detailBox {
+    margin-top: 2rem;
+    background-color: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 10px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.detailHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.detailContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.closeBtn {
+    background-color: #e53e3e;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.closeBtn:hover {
+    background-color: #c53030;
+}
+
+.cancelBtn {
+    margin-top: 1rem;
+    background-color: #ed8936;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.cancelBtn:hover {
+    background-color: #dd6b20;
+}
