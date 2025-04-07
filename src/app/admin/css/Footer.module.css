@@ -1,0 +1,14 @@
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: #1a202c;
+    color: #a0aec0;
+    text-align: center;
+    line-height: 60px;
+    z-index: 1000;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    font-size: 0.9rem;
+}
