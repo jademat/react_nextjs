@@ -293,3 +293,90 @@
         width: 100%;
     }
 }
+/* ✅ 공통 상세정보 박스 스타일 */
+.detailFormBox {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: #f9fafb;
+    border-radius: 10px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* ✅ 상세정보 상단 타이틀 + 닫기 버튼 */
+.detailHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.detailHeader h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.closeButton {
+    background-color: #e53e3e;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.closeButton:hover {
+    background-color: #c53030;
+}
+
+/* ✅ 상세정보 테이블 */
+.detailTable {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    font-size: 0.95rem;
+}
+
+.detailTable th {
+    text-align: left;
+    background-color: #edf2f7;
+    color: #2d3748;
+    padding: 0.75rem;
+    width: 15%;
+    white-space: nowrap;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.detailTable td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #4a5568;
+    width: 35%;
+}
+
+/* ✅ 반응형: 작은 화면에서 단일 열 구조 */
+@media (max-width: 768px) {
+    .detailTable th,
+    .detailTable td {
+        display: block;
+        width: 100%;
+    }
+
+    .detailTable tr {
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    .detailTable th {
+        background: none;
+        font-weight: 700;
+        padding-bottom: 0.3rem;
+    }
+
+    .detailTable td {
+        padding-top: 0;
+    }
+}

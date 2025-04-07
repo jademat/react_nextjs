@@ -1,21 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import styles from '@/app/(Components)/css/UserList.module.css';
+import styles from '@/app/(Components)/css/CommonList.module.css';
 
 export default function UserList() {
     const [selectedMember, setSelectedMember] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
-    const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-    const [registerData, setRegisterData] = useState({
-        name: '',
-        affiliation: '',
-        userId: '',
-        phone: '',
-        email: '',
-        regDate: '',
-        state: '정상',
-    });
 
     const memberData = [
         {
@@ -48,28 +38,10 @@ export default function UserList() {
 
     const handleRowClick = (member) => {
         setSelectedMember(member);
-        setIsRegisterOpen(false);
     };
 
     const closeDetail = () => {
         setSelectedMember(null);
-        setIsRegisterOpen(false);
-    };
-
-    const toggleRegister = () => {
-        setIsRegisterOpen(true);
-        setSelectedMember(null);
-    };
-
-    const handleRegisterChange = (e) => {
-        const { name, value } = e.target;
-        setRegisterData((prev) => ({ ...prev, [name]: value }));
-    };
-
-    const handleRegisterSubmit = (e) => {
-        e.preventDefault();
-        console.log('등록 정보:', registerData);
-        setIsRegisterOpen(false);
     };
 
     return (
@@ -84,7 +56,6 @@ export default function UserList() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className={styles.searchInput}
                 />
-                <button className={styles.registerBtn} onClick={toggleRegister}>등록</button>
             </div>
 
             <table className={styles.memberTable}>
@@ -120,99 +91,38 @@ export default function UserList() {
                 </tbody>
             </table>
 
-            {(selectedMember || isRegisterOpen) && (
-                <div className={styles.detailForm}>
+            {selectedMember && (
+                <div className={styles.detailFormBox}>
                     <div className={styles.detailHeader}>
-                        <h2>{isRegisterOpen ? '회원 등록' : '회원 상세정보'}</h2>
+                        <h2>회원 상세정보</h2>
                         <button onClick={closeDetail} className={styles.closeButton}>닫기</button>
                     </div>
-                    <form onSubmit={isRegisterOpen ? handleRegisterSubmit : undefined} className={styles.responsiveForm}>
-                        <div className={styles.formRow}>
-                            <label>회원명</label>
-                            <input
-                                type="text"
-                                name="name"
-                                value={isRegisterOpen ? registerData.name : undefined}
-                                onChange={isRegisterOpen ? handleRegisterChange : undefined}
-                                defaultValue={!isRegisterOpen ? selectedMember?.name : undefined}
-                                placeholder="회원명 입력"
-                            />
-                        </div>
-                        <div className={styles.formRow}>
-                            <label>소속</label>
-                            <input
-                                type="text"
-                                name="affiliation"
-                                value={isRegisterOpen ? registerData.affiliation : undefined}
-                                onChange={isRegisterOpen ? handleRegisterChange : undefined}
-                                defaultValue={!isRegisterOpen ? selectedMember?.affiliation : undefined}
-                                placeholder="소속 입력"
-                            />
-                        </div>
-                        <div className={styles.formRow}>
-                            <label>아이디</label>
-                            <input
-                                type="text"
-                                name="userId"
-                                value={isRegisterOpen ? registerData.userId : undefined}
-                                onChange={isRegisterOpen ? handleRegisterChange : undefined}
-                                defaultValue={!isRegisterOpen ? selectedMember?.userId : undefined}
-                                placeholder="아이디 입력"
-                            />
-                        </div>
-                        <div className={styles.formRow}>
-                            <label>연락처</label>
-                            <input
-                                type="text"
-                                name="phone"
-                                value={isRegisterOpen ? registerData.phone : undefined}
-                                onChange={isRegisterOpen ? handleRegisterChange : undefined}
-                                defaultValue={!isRegisterOpen ? selectedMember?.phone : undefined}
-                                placeholder="연락처 입력"
-                            />
-
-                        </div>
-                        <div className={styles.formRow}>
-                            <label>이메일</label>
-                            <input
-                                type="text"
-                                name="email"
-                                value={isRegisterOpen ? registerData.email : undefined}
-                                onChange={isRegisterOpen ? handleRegisterChange : undefined}
-                                defaultValue={!isRegisterOpen ? selectedMember?.email : undefined}
-                                placeholder="이메일 입력"
-                            />
-
-                        </div>
-                        <div className={styles.formRow}>
-                            <label>가입일</label>
-                            <input
-                                type="date"
-                                name="regDate"
-                                value={isRegisterOpen ? registerData.regDate : undefined}
-                                onChange={isRegisterOpen ? handleRegisterChange : undefined}
-                                defaultValue={!isRegisterOpen ? selectedMember?.regDate : undefined}
-                            />
-
-                        </div>
-                        <div className={styles.formRow}>
-                            <label>상태</label>
-                            <select
-                                name="state"
-                                value={isRegisterOpen ? registerData.state : undefined}
-                                onChange={isRegisterOpen ? handleRegisterChange : undefined}
-                                defaultValue={!isRegisterOpen ? selectedMember?.state : undefined}
-                            >
-                                <option value="정상">정상</option>
-                                <option value="정지">정지</option>
-                            </select>
-                        </div>
-                        <div className={styles.buttonRow}>
-                            <button type="submit" className={styles.submitButton}>
-                                {isRegisterOpen ? '등록' : '수정'}
-                            </button>
-                        </div>
-                    </form>
+                    <table className={styles.detailTable}>
+                        <tbody>
+                        <tr>
+                            <th>회원명</th>
+                            <td>{selectedMember.name}</td>
+                            <th>아이디</th>
+                            <td>{selectedMember.userId}</td>
+                        </tr>
+                        <tr>
+                            <th>소속</th>
+                            <td>{selectedMember.affiliation}</td>
+                            <th>이메일</th>
+                            <td>{selectedMember.email}</td>
+                        </tr>
+                        <tr>
+                            <th>연락처</th>
+                            <td>{selectedMember.phone}</td>
+                            <th>가입일</th>
+                            <td>{selectedMember.regDate}</td>
+                        </tr>
+                        <tr>
+                            <th>상태</th>
+                            <td colSpan="3">{selectedMember.state}</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             )}
         </div>

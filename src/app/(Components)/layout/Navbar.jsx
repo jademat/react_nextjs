@@ -19,7 +19,7 @@ export default function Navbar({ isOpen, toggleNavbar }) {
         if (['/users/list', '/instructors/list', '/admins/list'].includes(pathname)) {
             setOpenMenus((prev) => ({ ...prev, membership: true }));
         }
-        if (['/courses', '/lectures'].includes(pathname)) {
+        if (['/course/list', '/lectures'].includes(pathname)) {
             setOpenMenus((prev) => ({ ...prev, system: true }));
         }
         if (['/asd', '/abc'].includes(pathname)) {
@@ -103,8 +103,8 @@ export default function Navbar({ isOpen, toggleNavbar }) {
                         <ul className={styles.submenu}>
                             <li className={styles.submenuItem}>
                                 <Link
-                                    href="/courses"
-                                    className={isActive('/courses') ? styles.activeLink : styles.link}
+                                    href="/course/list"
+                                    className={isActive('/course/list') ? styles.activeLink : styles.link}
                                     onClick={toggleNavbar}
                                 >
                                     과정관리
@@ -112,8 +112,8 @@ export default function Navbar({ isOpen, toggleNavbar }) {
                             </li>
                             <li className={styles.submenuItem}>
                                 <Link
-                                    href="/lectures"
-                                    className={isActive('/lectures') ? styles.activeLink : styles.link}
+                                    href="/lectures/list"
+                                    className={isActive('/lectures/list') ? styles.activeLink : styles.link}
                                     onClick={toggleNavbar}
                                 >
                                     강의관리
