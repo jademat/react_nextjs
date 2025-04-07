@@ -144,3 +144,24 @@
         width: 100%;
     }
 }
+
+@media (max-width: 768px) {
+    .contentWrapper {
+        flex-direction: column;
+    }
+
+    .tableWrapper,
+    .detailForm {
+        min-width: 100%;
+    }
+
+    .buttonRow {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .submitButton,
+    .closeButton {
+        width: 100%;
+    }
+}
