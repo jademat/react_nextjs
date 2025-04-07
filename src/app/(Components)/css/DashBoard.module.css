@@ -1,0 +1,130 @@
+.dashboardContainer {
+    padding: 20px;
+    background-color: #f4f7fa;
+    min-height: calc(100vh - 120px); /* 헤더, 네브바, 푸터 공간 고려 */
+    color: #333;
+}
+
+.pageTitle {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 긴급 요청 섹션 (필요 시 기존 코드와 동일) */
+.urgentBox {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.requestRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.requestButton {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+/* 두 테이블을 좌우로 배치 */
+.twoTableContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* 테이블 박스 */
+.tableBox {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 테이블 헤더: 제목과 "자세히" 링크를 양 끝에 배치 */
+.tableHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+}
+
+.tableTitle {
+    font-size: 18px;
+    margin: 0;
+}
+
+.detailLink {
+    font-size: 14px;
+    color: #0275d8;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.detailLink:hover {
+    color: #014c8c;
+}
+
+/* 테이블 스타일 */
+.infoTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.infoTable th {
+    width: 120px;
+    text-align: left;
+    padding: 8px;
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+}
+
+.infoTable td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    .twoTableContainer {
+        grid-template-columns: 1fr; /* 1열로 변경 */
+    }
+
+    .pageTitle {
+        font-size: 24px;
+    }
+
+    .tableTitle {
+        font-size: 16px;
+    }
+
+    .detailLink {
+        font-size: 12px;
+    }
+
+    .infoTable th,
+    .infoTable td {
+        padding: 6px;
+        font-size: 14px;
+    }
+
+    .requestButton {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+}
