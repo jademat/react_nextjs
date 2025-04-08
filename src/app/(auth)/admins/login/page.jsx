@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from '@/app/(auth)/login/Login.module.css';
+import styles from '@/app/(auth)/admins/login/Login.module.css';
 
 export default function LoginPage() {
     const router = useRouter();
@@ -13,7 +13,7 @@ export default function LoginPage() {
         e.preventDefault();
         // 아이디와 비밀번호가 모두 입력되면 관리자 영역으로 이동
         if (username && password) {
-            router.push('/dashboard');
+            router.push('/admins/dashboard');
         } else {
             alert('아이디와 비밀번호를 모두 입력하세요.');
         }
