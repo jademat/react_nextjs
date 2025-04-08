@@ -59,7 +59,7 @@ export default function Navbar({ isOpen, toggleNavbar }) {
                         <ul className={styles.submenu}>
                             <li className={styles.submenuItem}>
                                 <Link
-                                    href="/users/list"
+                                    href="/admins/users/list"
                                     className={isActive('/users/list') ? styles.activeLink : styles.link}
                                     onClick={toggleNavbar}
                                 >
@@ -68,7 +68,7 @@ export default function Navbar({ isOpen, toggleNavbar }) {
                             </li>
                             <li className={styles.submenuItem}>
                                 <Link
-                                    href="/instructors/list"
+                                    href="/admins/instructors/list"
                                     className={isActive('/instructors/list') ? styles.activeLink : styles.link}
                                     onClick={toggleNavbar}
                                 >
@@ -77,7 +77,7 @@ export default function Navbar({ isOpen, toggleNavbar }) {
                             </li>
                             <li className={styles.submenuItem}>
                                 <Link
-                                    href="/admins/list"
+                                    href="/admins/admin/list"
                                     className={isActive('/admins/list') ? styles.activeLink : styles.link}
                                     onClick={toggleNavbar}
                                 >
@@ -103,7 +103,7 @@ export default function Navbar({ isOpen, toggleNavbar }) {
                         <ul className={styles.submenu}>
                             <li className={styles.submenuItem}>
                                 <Link
-                                    href="/course/list"
+                                    href="/admins/course/list"
                                     className={isActive('/course/list') ? styles.activeLink : styles.link}
                                     onClick={toggleNavbar}
                                 >
@@ -112,7 +112,7 @@ export default function Navbar({ isOpen, toggleNavbar }) {
                             </li>
                             <li className={styles.submenuItem}>
                                 <Link
-                                    href="/lectures/list"
+                                    href="/admins/lectures/list"
                                     className={isActive('/lectures/list') ? styles.activeLink : styles.link}
                                     onClick={toggleNavbar}
                                 >
@@ -138,7 +138,7 @@ export default function Navbar({ isOpen, toggleNavbar }) {
                         <ul className={styles.submenu}>
                             <li className={styles.submenuItem}>
                                 <Link
-                                    href="/survey/list"
+                                    href="/admins/survey/list"
                                     className={isActive('/survey/list') ? styles.activeLink : styles.link}
                                     onClick={toggleNavbar}
                                 >

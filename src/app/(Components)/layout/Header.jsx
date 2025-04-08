@@ -8,7 +8,7 @@ export default function Header({ toggleNavbar }) {
             <button className={styles.menuToggle} onClick={toggleNavbar}>
                 ☰
             </button>
-            <Link href="/dashboard" className={styles.logo}>
+            <Link href="/admins/dashboard" className={styles.logo}>
                 HLB academy
             </Link>
             <div className={styles.userInfo}>

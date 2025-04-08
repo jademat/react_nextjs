@@ -9,33 +9,38 @@
     color: #2d3748;
 }
 
+/* 검색 + 등록 버튼 영역 */
 .toolbar {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
 }
 
 .searchInput {
-    width: 300px;
-    padding: 0.5rem 1rem;
-    border: 1px solid #ccc;
+    padding: 8px 12px;
+    width: 250px;
     border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
 }
 
-.registerBtn {
-    background-color: #3182ce;
-    color: white;
+.registerButton {
+    padding: 8px 16px;
+    background-color: #007bff;
     border: none;
-    padding: 0.5rem 1.2rem;
+    color: white;
+    font-weight: bold;
     border-radius: 6px;
-    font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
-.registerBtn:hover {
-    background-color: #2b6cb0;
+
+.registerButton:hover {
+    background-color: #0056b3;
 }
 
+/* 테이블 */
 .memberTable {
     width: 100%;
     border-collapse: collapse;
@@ -62,239 +67,37 @@
     cursor: pointer;
 }
 
-.detailForm {
-    margin-top: 2rem;
-    background-color: #f9fafb;
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.detailHeader {
+/* 페이징 */
+.pagination {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
 }
 
-.closeButton {
-    background-color: #e53e3e;
-    color: white;
-    border: none;
-    padding: 0.4rem 0.8rem;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.closeButton:hover {
-    background-color: #c53030;
-}
-
-.formRow {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-}
-
-.formRow label {
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-    color: #2d3748;
-}
-
-.formRow input,
-.formRow select {
-    padding: 0.5rem;
-    border: 1px solid #cbd5e0;
-    border-radius: 6px;
-}
-
-.submitButton {
-    background-color: #3182ce;
-    color: white;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 6px;
-    font-weight: 600;
-    margin-top: 1rem;a/* 등록/상세 정보 박스 */
-.detailForm {
-    margin-top: 2rem;
-    background-color: #f9fafb;
-    padding: 1.5rem;
-    border-radius: 10px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-    /* 반응형 폼 구조 */
-    .responsiveForm {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    /* 폼의 한 줄 */
-    .formRow {
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* 라벨 스타일 */
-    .formRow label {
-        font-weight: 600;
-        margin-bottom: 0.3rem;
-        color: #2d3748;
-    }
-
-    /* input, select 공통 스타일 */
-    .formRow input,
-    .formRow select {
-        padding: 0.5rem;
-        border: 1px solid #cbd5e0;
-        border-radius: 6px;
-        font-size: 0.95rem;
-        background-color: white;
-    }
-
-    /* 버튼 행 */
-    .buttonRow {
-        display: flex;
-        justify-content: flex-end; /* 기본은 오른쪽 정렬 */
-        margin-top: 1rem;
-    }
-
-    /* 작은 화면에서는 버튼을 꽉 차게 */
-    @media (max-width: 600px) {
-        .detailForm {
-            padding: 1rem;
-        }
-
-        .buttonRow {
-            justify-content: center;
-        }
-
-        .submitButton {
-            width: 100%;
-        }
-    }
-
-    /* 제출 버튼 */
-    .submitButton {
-        background-color: #3182ce;
-        color: white;
-        border: none;
-        padding: 0.6rem 1.5rem;
-        border-radius: 6px;
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background-color 0.2s ease;
-    }
-
-    .submitButton:hover {
-        background-color: #2b6cb0;
-    }
-
-    cursor: pointer;
-}
-.submitButton:hover {
-    background-color: #2b6cb0;
-}
-.buttonRow {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1rem;
-}
-
-@media (max-width: 600px) {
-    .buttonRow {
-        justify-content: center;
-    }
-
-    .submitButton {
-        width: 100%;
-    }
-}
-
-/* ✅ 상세/등록 폼 전체 박스 */
-.detailForm {
-    margin-top: 2rem;
-    background-color: #f9fafb;
-    padding: 1.5rem;
-    border-radius: 10px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-/* ✅ 폼 구조 */
-.responsiveForm {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.formRow {
-    display: flex;
-    flex-direction: column;
-}
-
-.formRow label {
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-    color: #2d3748;
-}
-
-.formRow input,
-.formRow select {
-    padding: 0.5rem;
-    border: 1px solid #cbd5e0;
-    border-radius: 6px;
-    font-size: 0.95rem;
+.pageBtn {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
     background-color: white;
-}
-
-/* ✅ 버튼 정렬 */
-.buttonRow {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1rem;
-}
-
-.submitButton {
-    background-color: #3182ce;
-    color: white;
-    border: none;
-    padding: 0.6rem 1.5rem;
     border-radius: 6px;
-    font-weight: 600;
-    font-size: 1rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: 0.2s ease;
 }
 
-.submitButton:hover {
-    background-color: #2b6cb0;
+.pageBtn:hover {
+    background-color: #f0f0f0;
 }
 
-/* ✅ 반응형 대응 */
-@media (max-width: 600px) {
-    .detailForm {
-        padding: 1rem;
-    }
-
-    .buttonRow {
-        justify-content: center;
-    }
-
-    .submitButton {
-        width: 100%;
-    }
+.activePageBtn {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border: 1px solid #007bff;
 }
-/* ✅ 공통 상세정보 박스 스타일 */
-.detailFormBox {
+
+/* 상세 정보 박스 */
+.detailBox {
     margin-top: 2rem;
     padding: 1.5rem;
     background-color: #f9fafb;
@@ -305,34 +108,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* ✅ 상세정보 상단 타이틀 + 닫기 버튼 */
-.detailHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.detailHeader h2 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #2d3748;
-}
-
-.closeButton {
-    background-color: #e53e3e;
-    color: white;
-    border: none;
-    padding: 0.4rem 0.8rem;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.closeButton:hover {
-    background-color: #c53030;
-}
-
-/* ✅ 상세정보 테이블 */
+/* 상세 테이블 */
 .detailTable {
     width: 100%;
     border-collapse: collapse;
@@ -357,7 +133,29 @@
     width: 35%;
 }
 
-/* ✅ 반응형: 작은 화면에서 단일 열 구조 */
+/* 닫기 버튼 */
+.buttonRow {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.closeButton {
+    padding: 8px 16px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.closeButton:hover {
+    background-color: #c82333;
+}
+
+/* 반응형 */
 @media (max-width: 768px) {
     .detailTable th,
     .detailTable td {
@@ -378,5 +176,9 @@
 
     .detailTable td {
         padding-top: 0;
+    }
+
+    .buttonRow {
+        justify-content: center;
     }
 }
