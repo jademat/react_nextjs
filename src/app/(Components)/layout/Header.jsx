@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from '@/app/(Components)/css/Header.module.css';
+import {router} from "next/client.js";
 
 export default function Header({ toggleNavbar }) {
     return (
@@ -13,7 +14,17 @@ export default function Header({ toggleNavbar }) {
             </Link>
             <div className={styles.userInfo}>
                 <span>Welcome, Admin</span>
-                <button className={styles.logout}>Logout</button>
+                <button className={styles.logout}
+                    onClick={() => {
+                        localStorage.removeItem("accessToken");
+                        alert("로그아웃 되었습니다");
+                        return(
+                            location.href =("/admins/login")
+                        );
+                    }}
+                >
+                    로그아웃
+                </button>
             </div>
         </header>
     );
