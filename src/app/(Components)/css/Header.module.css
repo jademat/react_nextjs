@@ -50,3 +50,51 @@
         display: block;
     }
 }
+
+.refreshTokenButton {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.refreshTokenButton:hover {
+    background-color: #45a049;
+}
+
+.tokenExpiry {
+    font-size: 14px;
+    margin-left: 10px;
+    color: #555;
+}
+
+.logout {
+    padding: 8px 16px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.logout:hover {
+    background-color: #e53935;
+}
+.tokenExpiry {
+    color: white; /* 밝은 색 (예: 토마토 색) */
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.tokenExpiryExpired {
+    color: #FF0000; /* 만료된 경우 빨간색 */
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 5px;
+    border-radius: 5px;
+}

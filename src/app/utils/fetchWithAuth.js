@@ -1,22 +1,38 @@
 export const fetchWithAuth = (url, options = {}) => {
-    // 로컬스토리지에서 accessToken 가져오기
     const token = localStorage.getItem("accessToken");
 
-    // 기본 옵션 설정 (기본적으로 GET 요청)
+    // 로그인 상태 확인: 토큰이 없으면 로그인 페이지로 리다이렉트
+    if (!token) {
+        alert("로그인이 필요합니다.");
+        window.location.href = "/admins/login";
+        return Promise.reject("No token");
+    }
+
+    // 기본 옵션 설정
     const defaultOptions = {
-        method: "GET", // 기본 메서드는 GET
+        method: "GET",
         headers: {
-            "Authorization": `Bearer ${token}`, // 인증 토큰
-            "Content-Type": "application/json", // JSON 데이터 요청
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
         },
-        ...options, // 외부에서 전달된 옵션을 병합
+        ...options,
     };
 
-    // body가 필요한 요청(POST, PUT 등)일 경우 처리
-    if (options.body) {
+    // body가 있을 경우 JSON으로 변환
+    if (options.body && typeof options.body === 'object' && !(options.body instanceof FormData)) {
         defaultOptions.body = JSON.stringify(options.body);
     }
 
     // fetch 요청 보내기
-    return fetch(url, defaultOptions);
+    return fetch(url, defaultOptions)
+        .then(res => {
+            // 403 Forbidden: 세션 만료 시 처리
+            if (res.status === 403) {
+                alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+                localStorage.removeItem("accessToken");
+                window.location.href = "/admins/login";
+                return Promise.reject("Unauthorized");
+            }
+            return res;
+        });
 };
