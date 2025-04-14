@@ -1,6 +1,20 @@
 import { fetchWithAuth } from '@/app/utils/fetchWithAuth';
 import Swal from "sweetalert2";
 
+
+export const initialAdminForm = {
+    loginId: '',
+    pswd: '',
+    adminNm: '',
+    email: '',
+    hpNo: '',
+    addr: '',
+    addrDtl: '',
+    birthDate: '',
+    genCd: '',
+    role: 'ADMIN',  // 기본값을 ADMIN으로 설정할 수도 있음
+};
+
 export const fetchAdminList = (search, page, setAdminData, setTotalPages) => {
     const apiUrl = `http://localhost:8080/api/admins/admin/list?page=${page}${search ? `&search=${search}` : ''}`;
 
@@ -114,3 +128,4 @@ export const validateForm = (values) => {
 export const getRecaptchaSiteKey = () => {
     return process.env.NEXT_PUBLIC_RECAPTCHA_SITEKEY;
 };
+

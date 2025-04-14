@@ -25,6 +25,8 @@ export default function LoginPage() {
 
                 if (data.accessToken) {
                     localStorage.setItem("accessToken", data.accessToken);
+                    localStorage.setItem("role", data.role);
+
                     Swal.fire({
                         icon: 'success',
                         title: '로그인 성공!',

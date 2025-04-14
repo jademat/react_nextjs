@@ -88,7 +88,9 @@ export default function CourseList() {
                     {totalPages > 0 && (
                         <div className={styles.pagination}>
                             <button
-                                onClick={() => router.push(`/course/list?page=${Math.max(0, page - 1)}${search ? `&search=${search}` : ''}`)}
+                                onClick={() =>
+                                    router.push(`/admins/course/list?page=${Math.max(0, page - 1)}${search ? `&search=${search}` : ''}`)
+                                }
                                 className={styles.pageBtn}
                                 disabled={page === 0}
                             >
@@ -98,7 +100,9 @@ export default function CourseList() {
                             {Array.from({ length: totalPages }).map((_, i) => (
                                 <button
                                     key={i}
-                                    onClick={() => router.push(`/course/list?page=${i}${search ? `&search=${search}` : ''}`)}
+                                    onClick={() =>
+                                        router.push(`/admins/course/list?page=${i}${search ? `&search=${search}` : ''}`)
+                                    }
                                     className={`${styles.pageBtn} ${i === page ? styles.activePageBtn : ''}`}
                                 >
                                     {i + 1}
@@ -106,7 +110,9 @@ export default function CourseList() {
                             ))}
 
                             <button
-                                onClick={() => router.push(`/course/list?page=${Math.min(totalPages - 1, page + 1)}${search ? `&search=${search}` : ''}`)}
+                                onClick={() =>
+                                    router.push(`/admins/course/list?page=${Math.min(totalPages - 1, page + 1)}${search ? `&search=${search}` : ''}`)
+                                }
                                 className={styles.pageBtn}
                                 disabled={page === totalPages - 1}
                             >

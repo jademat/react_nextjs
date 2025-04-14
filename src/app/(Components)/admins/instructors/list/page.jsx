@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import styles from '@/app/(Components)/css/CommonList.module.css';
-import { fetchInstructorList, handleRegisterSubmit, validateInstructorForm, initialForm } from '@/app/utils/instructorUtils';
+import { fetchInstructorList, handleRegisterSubmit, validateInstructorForm, initialForm, fetchInstructorLectures  } from '@/app/utils/instructorUtils';
 
 export default function InstructorList() {
     const [instructorData, setInstructorData] = useState([]);
@@ -13,6 +13,7 @@ export default function InstructorList() {
     const [totalPages, setTotalPages] = useState(0);
     const [totalElements, setTotalElements] = useState(0);
     const [errors, setErrors] = useState({});
+    const [lectures, setLectures] = useState([]);
     const formRef = useRef(null);
 
     const [registerData, setRegisterData] = useState(initialForm);
@@ -20,6 +21,14 @@ export default function InstructorList() {
     useEffect(() => {
         fetchInstructorList(searchTerm, page, setInstructorData, setTotalPages, setTotalElements);
     }, [searchTerm, page]);
+
+    useEffect(() => {
+        if (selectedInstructor) {
+            fetchInstructorLectures(selectedInstructor.instNo, setLectures);
+        } else {
+            setLectures([]); // 선택 해제 시 강의 목록 초기화
+        }
+    }, [selectedInstructor]);
 
     const handleRowClick = (inst) => {
         setSelectedInstructor(inst);
@@ -59,7 +68,10 @@ export default function InstructorList() {
                     type="text"
                     placeholder="이름, 아이디, 이메일 검색"
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={(e) => {
+                        setSearchTerm(e.target.value);
+                        setPage(0);
+                    }}
                     className={styles.searchInput}
                 />
                 <button className={styles.registerButton} onClick={toggleRegister}>등록</button>
@@ -125,19 +137,12 @@ export default function InstructorList() {
                     {isRegisterOpen ? (
                         <form
                             ref={formRef}
-                            onSubmit={(e) => handleRegisterSubmit(
-                                e,
-                                formRef,
-                                registerData,
-                                setRegisterData,
-                                setErrors,
-                                setIsRegisterOpen,
-                                searchTerm,
-                                page,
-                                setInstructorData,
-                                setTotalPages,
-                                setTotalElements
-                            )}
+                            onSubmit={(e) =>
+                                handleRegisterSubmit(
+                                    e, formRef, registerData, setRegisterData, setErrors, setIsRegisterOpen, searchTerm, page,
+                                    setInstructorData, setTotalPages, setTotalElements
+                                )
+                            }
                             className={styles.registerForm}
                         >
                             <div className={styles.formRow}><label>강사명</label><input name="instNm" value={registerData.instNm} onChange={handleRegisterChange} required /></div>
@@ -165,6 +170,14 @@ export default function InstructorList() {
                             <tr><th>우편번호</th><td>{formData.zipCd}</td><th>이메일</th><td>{formData.email}</td></tr>
                             <tr><th>주소</th><td colSpan="3">{formData.addr} {formData.addrDtl}</td></tr>
                             <tr><th>가입일</th><td colSpan="3">{formData.instDate?.substring(0, 10)}</td></tr>
+                            <tr><th>담당 강의</th>
+                                <td colSpan="3">
+                                {lectures.length === 0
+                                        ? '담당 강의가 없습니다.'
+                                        : lectures.map((lec, index) => (
+                                            <span key={lec.courNo}>{lec.courNm}{index < lectures.length - 1 && ', '}</span>
+                                        ))}
+                                </td></tr>
                             </tbody>
                         </table>
                     )}

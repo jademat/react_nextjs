@@ -74,3 +74,18 @@ export const handlePageChange = (newPage, totalPages, setPage) => {
         setPage(newPage);
     }
 };
+
+export const fetchInstructorLectures = async (instNo, setLectures) => {
+    try {
+        const res = await fetchWithAuth(`http://localhost:8080/api/admins/inst/inst/${instNo}/lectures`);
+        if (res.ok) {
+            const data = await res.json();
+            setLectures(data);
+        } else {
+            setLectures([]);
+        }
+    } catch (err) {
+        console.error("강사 강의 조회 실패:", err);
+        setLectures([]);
+    }
+};

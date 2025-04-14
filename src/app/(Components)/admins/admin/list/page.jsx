@@ -3,7 +3,16 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams, useRouter } from 'next/navigation';
 import styles from '@/app/(Components)/css/CommonList.module.css';
-import {fetchAdminList,fetchAdminDetail,handleSearch,handleSubmit,handleReset,getRecaptchaSiteKey } from '@/app/utils/adminUtils';
+import Swal from 'sweetalert2';
+import {
+    fetchAdminList,
+    fetchAdminDetail,
+    handleSearch,
+    handleSubmit,
+    handleReset,
+    getRecaptchaSiteKey,
+    initialAdminForm
+} from '@/app/utils/adminUtils';
 
 const AdminListPage = () => {
     const searchParams = useSearchParams();
@@ -18,15 +27,13 @@ const AdminListPage = () => {
     const search = searchParams.get('search') || '';
     const page = parseInt(searchParams.get('page') || '0');
     const [sitekey, setSitekey] = useState(null);
-
+    const [registerData, setRegisterData] = useState(initialAdminForm);
 
     useEffect(() => {
         fetchAdminList(search, page, setAdminData, setTotalPages);
     }, [search, page]);
 
-    const handleRegAdmin = () =>{
-        // // recaptcha 모듈 적재
-        // useEffect(() => {
+    const toggleRegister = () => {
         const script = document.createElement('script');
         script.src = 'https://www.google.com/recaptcha/api.js';
         script.async = true;
@@ -34,11 +41,25 @@ const AdminListPage = () => {
         document.body.appendChild(script);
 
         const site_key = process.env.NEXT_PUBLIC_RECAPTCHA_SITEKEY;
-        console.log("stie_key >> ",site_key);
+        console.log("stie_key >> ", site_key);
         setSitekey(site_key);
 
         setIsRegisterOpen(true);
         setSelectedAdmin(null);
+        setRegisterData(initialAdminForm);
+    };
+
+    const handleRegisterClick = () => {
+        const role = localStorage.getItem('role');
+        if (role !== 'SUPERADMIN') {
+            Swal.fire({
+                icon: 'error',
+                title: '권한 없음',
+                text: '관리자 등록은 SUPERADMIN만 가능합니다.',
+            });
+            return;
+        }
+        toggleRegister();
     };
 
     return (
@@ -56,7 +77,9 @@ const AdminListPage = () => {
                     />
                 </div>
                 <div className={styles.buttonArea}>
-                    <button className={styles.registerButton} onClick={handleRegAdmin}>등록</button>
+                    <button className={styles.registerButton} onClick={handleRegisterClick}>
+                        등록
+                    </button>
                 </div>
             </div>
 
@@ -73,7 +96,7 @@ const AdminListPage = () => {
                 </thead>
                 <tbody>
                 {adminData.map((admin) => (
-                    <tr key={admin.adminNo} onClick={() => {fetchAdminDetail(admin.adminNo, setSelectedAdmin); setIsRegisterOpen(false);}} className={styles.tableRow}>
+                    <tr key={admin.adminNo} onClick={() => { fetchAdminDetail(admin.adminNo, setSelectedAdmin); setIsRegisterOpen(false); }} className={styles.tableRow}>
                         <td>{admin.adminNo}</td>
                         <td>{admin.adminNm}</td>
                         <td>{admin.loginId}</td>
