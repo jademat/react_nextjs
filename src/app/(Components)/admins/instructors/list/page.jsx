@@ -1,48 +1,44 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '@/app/(Components)/css/CommonList.module.css';
+import { fetchWithAuth } from '@/app/utils/fetchWithAuth';
 
 export default function InstructorList() {
+    const [instructorData, setInstructorData] = useState([]);
     const [selectedInstructor, setSelectedInstructor] = useState(null);
     const [isRegisterOpen, setIsRegisterOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [registerData, setRegisterData] = useState({
-        name: '',
-        affiliation: '',
-        userId: '',
-        phone: '',
-        email: '',
-        regDate: '',
-        state: '정상',
+        instId: '',
+        passwd: '',
+        instNm: '',
+        genCd: '',
+        birthDate: '',
+        zipCd: '',
+        addr: '',
+        addrDtl: '',
+        email: ''
     });
 
-    const instructorData = [
-        {
-            no: 1,
-            affiliation: '영어과',
-            name: '김철수',
-            userId: 'chulsoo',
-            phone: '010-9876-5432',
-            email: 'chulsoo@example.com',
-            regDate: '2025-04-10',
-            state: '정상',
-        },
-        {
-            no: 2,
-            affiliation: '프랑스어과',
-            name: '박영희',
-            userId: 'younghee',
-            phone: '010-1234-1111',
-            email: 'younghee@example.com',
-            regDate: '2025-04-12',
-            state: '정지',
-        },
-    ];
+    useEffect(() => {
+        fetchWithAuth("http://localhost:8080/api/admins/inst/list")
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data.content)) {
+                    setInstructorData(data.content);
+                } else {
+                    console.error("데이터 형식이 올바르지 않습니다.", data);
+                }
+            })
+            .catch(error => {
+                console.error("강사 데이터를 불러오는 중 오류 발생:", error);
+            });
+    }, []);
 
     const filteredInstructors = instructorData.filter((inst) =>
-        [inst.name, inst.userId, inst.phone, inst.email].some((field) =>
-            field.toLowerCase().includes(searchTerm.toLowerCase())
+        [inst.instNm, inst.instId, inst.email].some((field) =>
+            field?.toLowerCase().includes(searchTerm.toLowerCase())
         )
     );
 
@@ -60,13 +56,15 @@ export default function InstructorList() {
         setIsRegisterOpen(true);
         setSelectedInstructor(null);
         setRegisterData({
-            name: '',
-            affiliation: '',
-            userId: '',
-            phone: '',
-            email: '',
-            regDate: '',
-            state: '정상',
+            instId: '',
+            passwd: '',
+            instNm: '',
+            genCd: '',
+            birthDate: '',
+            zipCd: '',
+            addr: '',
+            addrDtl: '',
+            email: ''
         });
     };
 
@@ -103,30 +101,20 @@ export default function InstructorList() {
                 <thead>
                 <tr>
                     <th>No</th>
-                    <th>소속</th>
                     <th>강사명</th>
                     <th>아이디</th>
-                    <th>연락처</th>
                     <th>이메일</th>
                     <th>가입일</th>
-                    <th>상태</th>
                 </tr>
                 </thead>
                 <tbody>
-                {filteredInstructors.map((inst) => (
-                    <tr
-                        key={inst.no}
-                        onClick={() => handleRowClick(inst)}
-                        className={styles.tableRow}
-                    >
-                        <td>{inst.no}</td>
-                        <td>{inst.affiliation}</td>
-                        <td>{inst.name}</td>
-                        <td>{inst.userId}</td>
-                        <td>{inst.phone}</td>
+                {filteredInstructors.map((inst, index) => (
+                    <tr key={inst.instNo} onClick={() => handleRowClick(inst)} className={styles.tableRow}>
+                        <td>{index + 1}</td>
+                        <td>{inst.instNm}</td>
+                        <td>{inst.instId}</td>
                         <td>{inst.email}</td>
-                        <td>{inst.regDate}</td>
-                        <td>{inst.state}</td>
+                        <td>{inst.instDate?.substring(0, 10)}</td>
                     </tr>
                 ))}
                 </tbody>
@@ -143,34 +131,43 @@ export default function InstructorList() {
                         <form onSubmit={handleRegisterSubmit} className={styles.responsiveForm}>
                             <div className={styles.formRow}>
                                 <label>강사명</label>
-                                <input name="name" value={registerData.name} onChange={handleRegisterChange} required />
-                            </div>
-                            <div className={styles.formRow}>
-                                <label>소속</label>
-                                <input name="affiliation" value={registerData.affiliation} onChange={handleRegisterChange} />
+                                <input name="instNm" value={registerData.instNm} onChange={handleRegisterChange} required />
                             </div>
                             <div className={styles.formRow}>
                                 <label>아이디</label>
-                                <input name="userId" value={registerData.userId} onChange={handleRegisterChange} />
+                                <input name="instId" value={registerData.instId} onChange={handleRegisterChange} />
                             </div>
                             <div className={styles.formRow}>
-                                <label>연락처</label>
-                                <input name="phone" value={registerData.phone} onChange={handleRegisterChange} />
+                                <label>비밀번호</label>
+                                <input name="passwd" type="password" value={registerData.passwd} onChange={handleRegisterChange} />
+                            </div>
+                            <div className={styles.formRow}>
+                                <label>성별</label>
+                                <select name="genCd" value={registerData.genCd} onChange={handleRegisterChange}>
+                                    <option value="">선택</option>
+                                    <option value="M">남</option>
+                                    <option value="F">여</option>
+                                </select>
+                            </div>
+                            <div className={styles.formRow}>
+                                <label>생년월일</label>
+                                <input name="birthDate" type="text" value={registerData.birthDate} onChange={handleRegisterChange} />
+                            </div>
+                            <div className={styles.formRow}>
+                                <label>우편번호</label>
+                                <input name="zipCd" value={registerData.zipCd} onChange={handleRegisterChange} />
+                            </div>
+                            <div className={styles.formRow}>
+                                <label>주소</label>
+                                <input name="addr" value={registerData.addr} onChange={handleRegisterChange} />
+                            </div>
+                            <div className={styles.formRow}>
+                                <label>상세주소</label>
+                                <input name="addrDtl" value={registerData.addrDtl} onChange={handleRegisterChange} />
                             </div>
                             <div className={styles.formRow}>
                                 <label>이메일</label>
                                 <input name="email" value={registerData.email} onChange={handleRegisterChange} />
-                            </div>
-                            <div className={styles.formRow}>
-                                <label>가입일</label>
-                                <input name="regDate" type="date" value={registerData.regDate} onChange={handleRegisterChange} />
-                            </div>
-                            <div className={styles.formRow}>
-                                <label>상태</label>
-                                <select name="state" value={registerData.state} onChange={handleRegisterChange}>
-                                    <option value="정상">정상</option>
-                                    <option value="정지">정지</option>
-                                </select>
                             </div>
                             <div className={styles.buttonRow}>
                                 <button type="submit" className={styles.submitButton}>등록</button>
@@ -181,25 +178,29 @@ export default function InstructorList() {
                             <tbody>
                             <tr>
                                 <th>강사명</th>
-                                <td>{formData.name}</td>
-                                <th>소속</th>
-                                <td>{formData.affiliation}</td>
-                            </tr>
-                            <tr>
+                                <td>{formData.instNm}</td>
                                 <th>아이디</th>
-                                <td>{formData.userId}</td>
-                                <th>연락처</th>
-                                <td>{formData.phone}</td>
+                                <td>{formData.instId}</td>
                             </tr>
                             <tr>
+                                <th>성별</th>
+                                <td>{formData.genCd}</td>
+                                <th>생년월일</th>
+                                <td>{formData.birthDate}</td>
+                            </tr>
+                            <tr>
+                                <th>우편번호</th>
+                                <td>{formData.zipCd}</td>
                                 <th>이메일</th>
                                 <td>{formData.email}</td>
-                                <th>가입일</th>
-                                <td>{formData.regDate}</td>
                             </tr>
                             <tr>
-                                <th>상태</th>
-                                <td colSpan="3">{formData.state}</td>
+                                <th>주소</th>
+                                <td colSpan="3">{formData.addr} {formData.addrDtl}</td>
+                            </tr>
+                            <tr>
+                                <th>가입일</th>
+                                <td colSpan="3">{formData.instDate?.substring(0, 10)}</td>
                             </tr>
                             </tbody>
                         </table>
