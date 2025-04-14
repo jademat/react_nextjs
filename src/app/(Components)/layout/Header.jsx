@@ -1,7 +1,7 @@
-import Swal from 'sweetalert2';
 import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 import Link from 'next/link';
-import styles from '@/app/(Components)/css/Header.module.css';
+import styles from '@/app/(Components)/css/Header.module.css'; // 스타일을 임포트 합니다.
 
 export default function Header({ toggleNavbar }) {
     const [expirationTime, setExpirationTime] = useState(null);
@@ -38,18 +38,18 @@ export default function Header({ toggleNavbar }) {
                 }
 
                 setIntervalId(newIntervalId);
-                setUsername(decodedToken.sub);
+                setUsername(decodedToken.sub); // username을 JWT 토큰에서 추출
 
                 return () => clearInterval(newIntervalId);
             }
         }
-    }, []);
+    }, []); // 빈 배열을 사용하여 컴포넌트가 처음 마운트될 때만 실행
 
     // JWT 토큰을 디코딩하는 함수
     const decodeJwt = (token) => {
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
         }).join(''));
         return JSON.parse(jsonPayload);
@@ -135,6 +135,19 @@ export default function Header({ toggleNavbar }) {
             }
         });
     };
+
+    useEffect(() => {
+        if (timeExpired) {
+            Swal.fire({
+                title: '세션 만료',
+                text: '세션이 만료되었습니다. 다시 로그인 해주세요.',
+                icon: 'error',
+                confirmButtonText: '확인'
+            }).then(() => {
+                window.location.href = "/admins/login"; // 세션 만료 후 로그인 페이지로 이동
+            });
+        }
+    }, [timeExpired]);
 
     return (
         <header className={`${styles.header} header`}>

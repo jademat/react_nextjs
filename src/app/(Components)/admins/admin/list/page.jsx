@@ -149,10 +149,10 @@ const AdminListPage = () => {
                             <option value="SUPERADMIN">최고관리자</option>
                         </select>
 
-                        {/*<div className="d-flex justify-content-center">*/}
-                        {/*    <div className="g-recaptcha" data-sitekey={sitekey}></div>*/}
-                        {/*</div>*/}
-                        {/*{errors.recaptcha && <div className="alert alert-danger">{errors.recaptcha}</div>}*/}
+                        <div className="d-flex justify-content-center">
+                            <div className="g-recaptcha" data-sitekey={sitekey}></div>
+                        </div>
+                        {errors.recaptcha && <div className="alert alert-danger">{errors.recaptcha}</div>}
 
                         <div className="d-flex justify-content-between mt-3">
                             <button type="submit" className="btn btn-primary">등록완료</button>

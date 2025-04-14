@@ -1,8 +1,9 @@
 import { fetchWithAuth } from '@/app/utils/fetchWithAuth';
+import Swal from "sweetalert2";
+
 export const fetchAdminList = (search, page, setAdminData, setTotalPages) => {
     const apiUrl = `http://localhost:8080/api/admins/admin/list?page=${page}${search ? `&search=${search}` : ''}`;
 
-    // fetchWithAuth 사용하여 Authorization 헤더 추가
     fetchWithAuth(apiUrl)
         .then(res => res.json())
         .then(data => {
@@ -19,7 +20,6 @@ export const fetchAdminDetail = (adminNo, setSelectedAdmin) => {
         .catch(console.error);
 };
 
-// 검색 기능
 export const handleSearch = (e, router) => {
     if (e.key === 'Enter') {
         const keyword = e.target.value.trim();
@@ -27,7 +27,6 @@ export const handleSearch = (e, router) => {
     }
 };
 
-// 폼 리셋
 export const handleReset = (formRef, setErrors) => {
     if (formRef?.current) {
         formRef.current.reset();
@@ -35,7 +34,6 @@ export const handleReset = (formRef, setErrors) => {
     setErrors({});
 };
 
-// 관리자 등록 기능 (POST 요청 시 fetchWithAuth 사용)
 export const handleSubmit = async (
     e, formRef, setErrors, fetchAdminList,
     setIsRegisterOpen, page, search, setAdminData, setTotalPages
@@ -55,34 +53,50 @@ export const handleSubmit = async (
     }
 
     try {
-        // fetchWithAuth 사용하여 POST 요청에 Authorization 헤더 포함
         const res = await fetchWithAuth('http://localhost:8080/api/admins/admin/create', {
             method: 'POST',
-            body: formValues, // formValues를 그대로 전송
+            body: formValues,
         });
 
         if (res.ok) {
-            alert('관리자 등록이 완료되었습니다!!');
+            Swal.fire({
+                icon: 'success',
+                title: '등록 성공!',
+                text: '관리자 등록이 완료되었습니다.',
+                timer: 1500,
+                showConfirmButton: false
+            });
             setIsRegisterOpen(false);
             formRef.current.reset();
             setErrors({});
             fetchAdminList(search, page, setAdminData, setTotalPages);
         } else if (res.status === 400) {
             const errorMessage = await res.text();
-            alert(errorMessage);
-            grecaptcha.reset(); // 실패 시 리캡챠 초기화
+            Swal.fire({
+                icon: 'warning',
+                title: '등록 실패',
+                text: errorMessage || '입력값을 다시 확인해주세요.'
+            });
+            grecaptcha.reset();
         } else {
-            alert('등록 실패! 다시 시도해 주세요.');
-            grecaptcha.reset(); // 실패 시 리캡챠 초기화
+            Swal.fire({
+                icon: 'error',
+                title: '등록 실패',
+                text: '등록 실패! 다시 시도해 주세요.'
+            });
+            grecaptcha.reset();
         }
     } catch (error) {
         console.error('register error:', error);
-        alert('서버 오류 발생! 관리자에게 문의하세요.');
-        grecaptcha.reset(); // 실패 시 리캡챠 초기화
+        Swal.fire({
+            icon: 'error',
+            title: '서버 오류',
+            text: '서버와 통신 중 문제가 발생했습니다.'
+        });
+        grecaptcha.reset();
     }
 };
 
-// 폼 검증
 export const validateForm = (values) => {
     const errors = {};
     if (!values.loginId || values.loginId.length < 6) errors.loginId = '아이디는 4자 이상 입력하세요.';
@@ -97,7 +111,6 @@ export const validateForm = (values) => {
     return errors;
 };
 
-// 리캡챠 사이트 키 (환경 변수에서 읽어오기)
 export const getRecaptchaSiteKey = () => {
     return process.env.NEXT_PUBLIC_RECAPTCHA_SITEKEY;
 };

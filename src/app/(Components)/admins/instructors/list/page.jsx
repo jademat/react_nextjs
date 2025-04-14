@@ -1,46 +1,25 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from '@/app/(Components)/css/CommonList.module.css';
-import { fetchWithAuth } from '@/app/utils/fetchWithAuth';
+import { fetchInstructorList, handleRegisterSubmit, validateInstructorForm, initialForm } from '@/app/utils/instructorUtils';
 
 export default function InstructorList() {
     const [instructorData, setInstructorData] = useState([]);
     const [selectedInstructor, setSelectedInstructor] = useState(null);
     const [isRegisterOpen, setIsRegisterOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-    const [registerData, setRegisterData] = useState({
-        instId: '',
-        passwd: '',
-        instNm: '',
-        genCd: '',
-        birthDate: '',
-        zipCd: '',
-        addr: '',
-        addrDtl: '',
-        email: ''
-    });
+    const [page, setPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const [totalElements, setTotalElements] = useState(0);
+    const [errors, setErrors] = useState({});
+    const formRef = useRef(null);
+
+    const [registerData, setRegisterData] = useState(initialForm);
 
     useEffect(() => {
-        fetchWithAuth("http://localhost:8080/api/admins/inst/list")
-            .then(res => res.json())
-            .then(data => {
-                if (Array.isArray(data.content)) {
-                    setInstructorData(data.content);
-                } else {
-                    console.error("데이터 형식이 올바르지 않습니다.", data);
-                }
-            })
-            .catch(error => {
-                console.error("강사 데이터를 불러오는 중 오류 발생:", error);
-            });
-    }, []);
-
-    const filteredInstructors = instructorData.filter((inst) =>
-        [inst.instNm, inst.instId, inst.email].some((field) =>
-            field?.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-    );
+        fetchInstructorList(searchTerm, page, setInstructorData, setTotalPages, setTotalElements);
+    }, [searchTerm, page]);
 
     const handleRowClick = (inst) => {
         setSelectedInstructor(inst);
@@ -55,17 +34,7 @@ export default function InstructorList() {
     const toggleRegister = () => {
         setIsRegisterOpen(true);
         setSelectedInstructor(null);
-        setRegisterData({
-            instId: '',
-            passwd: '',
-            instNm: '',
-            genCd: '',
-            birthDate: '',
-            zipCd: '',
-            addr: '',
-            addrDtl: '',
-            email: ''
-        });
+        setRegisterData(initialForm);
     };
 
     const handleRegisterChange = (e) => {
@@ -73,10 +42,10 @@ export default function InstructorList() {
         setRegisterData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleRegisterSubmit = (e) => {
-        e.preventDefault();
-        console.log('등록된 강사:', registerData);
-        setIsRegisterOpen(false);
+    const handlePageChange = (newPage) => {
+        if (newPage >= 0 && newPage < totalPages) {
+            setPage(newPage);
+        }
     };
 
     const isFormOpen = selectedInstructor || isRegisterOpen;
@@ -85,7 +54,6 @@ export default function InstructorList() {
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>강사 목록</h1>
-
             <div className={styles.toolbar}>
                 <input
                     type="text"
@@ -94,13 +62,12 @@ export default function InstructorList() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className={styles.searchInput}
                 />
-                <button className={styles.registerBtn} onClick={toggleRegister}>등록</button>
+                <button className={styles.registerButton} onClick={toggleRegister}>등록</button>
             </div>
 
             <table className={styles.memberTable}>
                 <thead>
                 <tr>
-                    <th>No</th>
                     <th>강사명</th>
                     <th>아이디</th>
                     <th>이메일</th>
@@ -108,9 +75,8 @@ export default function InstructorList() {
                 </tr>
                 </thead>
                 <tbody>
-                {filteredInstructors.map((inst, index) => (
+                {instructorData.map((inst) => (
                     <tr key={inst.instNo} onClick={() => handleRowClick(inst)} className={styles.tableRow}>
-                        <td>{index + 1}</td>
                         <td>{inst.instNm}</td>
                         <td>{inst.instId}</td>
                         <td>{inst.email}</td>
@@ -119,89 +85,86 @@ export default function InstructorList() {
                 ))}
                 </tbody>
             </table>
+            {totalPages > 0 && (
+                <div className={styles.pagination}>
+                    <button
+                        onClick={() => setPage(Math.max(0, page - 1))}
+                        className={styles.pageBtn}
+                        disabled={page === 0}
+                    >
+                        ◀ 이전
+                    </button>
+
+                    {Array.from({ length: totalPages }).map((_, i) => (
+                        <button
+                            key={i}
+                            onClick={() => setPage(i)}
+                            className={`${styles.pageBtn} ${i === page ? styles.activePageBtn : ''}`}
+                        >
+                            {i + 1}
+                        </button>
+                    ))}
+
+                    <button
+                        onClick={() => setPage(Math.min(totalPages - 1, page + 1))}
+                        className={styles.pageBtn}
+                        disabled={page === totalPages - 1}
+                    >
+                        다음 ▶
+                    </button>
+                </div>
+            )}
 
             {isFormOpen && (
-                <div className={styles.detailFormBox}>
+                <div className={styles.detailBox}>
                     <div className={styles.detailHeader}>
                         <h2>{isRegisterOpen ? '강사 등록' : '강사 상세정보'}</h2>
                         <button onClick={closeDetail} className={styles.closeButton}>닫기</button>
                     </div>
 
                     {isRegisterOpen ? (
-                        <form onSubmit={handleRegisterSubmit} className={styles.responsiveForm}>
-                            <div className={styles.formRow}>
-                                <label>강사명</label>
-                                <input name="instNm" value={registerData.instNm} onChange={handleRegisterChange} required />
-                            </div>
-                            <div className={styles.formRow}>
-                                <label>아이디</label>
-                                <input name="instId" value={registerData.instId} onChange={handleRegisterChange} />
-                            </div>
-                            <div className={styles.formRow}>
-                                <label>비밀번호</label>
-                                <input name="passwd" type="password" value={registerData.passwd} onChange={handleRegisterChange} />
-                            </div>
-                            <div className={styles.formRow}>
-                                <label>성별</label>
+                        <form
+                            ref={formRef}
+                            onSubmit={(e) => handleRegisterSubmit(
+                                e,
+                                formRef,
+                                registerData,
+                                setRegisterData,
+                                setErrors,
+                                setIsRegisterOpen,
+                                searchTerm,
+                                page,
+                                setInstructorData,
+                                setTotalPages,
+                                setTotalElements
+                            )}
+                            className={styles.registerForm}
+                        >
+                            <div className={styles.formRow}><label>강사명</label><input name="instNm" value={registerData.instNm} onChange={handleRegisterChange} required /></div>
+                            <div className={styles.formRow}><label>아이디</label><input name="instId" value={registerData.instId} onChange={handleRegisterChange} required /></div>
+                            <div className={styles.formRow}><label>비밀번호</label><input name="passwd" type="password" value={registerData.passwd} onChange={handleRegisterChange} required /></div>
+                            <div className={styles.formRow}><label>성별</label>
                                 <select name="genCd" value={registerData.genCd} onChange={handleRegisterChange}>
                                     <option value="">선택</option>
                                     <option value="M">남</option>
                                     <option value="F">여</option>
                                 </select>
                             </div>
-                            <div className={styles.formRow}>
-                                <label>생년월일</label>
-                                <input name="birthDate" type="text" value={registerData.birthDate} onChange={handleRegisterChange} />
-                            </div>
-                            <div className={styles.formRow}>
-                                <label>우편번호</label>
-                                <input name="zipCd" value={registerData.zipCd} onChange={handleRegisterChange} />
-                            </div>
-                            <div className={styles.formRow}>
-                                <label>주소</label>
-                                <input name="addr" value={registerData.addr} onChange={handleRegisterChange} />
-                            </div>
-                            <div className={styles.formRow}>
-                                <label>상세주소</label>
-                                <input name="addrDtl" value={registerData.addrDtl} onChange={handleRegisterChange} />
-                            </div>
-                            <div className={styles.formRow}>
-                                <label>이메일</label>
-                                <input name="email" value={registerData.email} onChange={handleRegisterChange} />
-                            </div>
-                            <div className={styles.buttonRow}>
-                                <button type="submit" className={styles.submitButton}>등록</button>
-                            </div>
+                            <div className={styles.formRow}><label>생년월일</label><input name="birthDate" value={registerData.birthDate} onChange={handleRegisterChange} /></div>
+                            <div className={styles.formRow}><label>우편번호</label><input name="zipCd" value={registerData.zipCd} onChange={handleRegisterChange} /></div>
+                            <div className={styles.formRow}><label>주소</label><input name="addr" value={registerData.addr} onChange={handleRegisterChange} /></div>
+                            <div className={styles.formRow}><label>상세주소</label><input name="addrDtl" value={registerData.addrDtl} onChange={handleRegisterChange} /></div>
+                            <div className={styles.formRow}><label>이메일</label><input name="email" value={registerData.email} onChange={handleRegisterChange} /></div>
+                            <div className={styles.buttonRow}><button type="submit" className={styles.submitButton}>등록</button></div>
                         </form>
                     ) : (
                         <table className={styles.detailTable}>
                             <tbody>
-                            <tr>
-                                <th>강사명</th>
-                                <td>{formData.instNm}</td>
-                                <th>아이디</th>
-                                <td>{formData.instId}</td>
-                            </tr>
-                            <tr>
-                                <th>성별</th>
-                                <td>{formData.genCd}</td>
-                                <th>생년월일</th>
-                                <td>{formData.birthDate}</td>
-                            </tr>
-                            <tr>
-                                <th>우편번호</th>
-                                <td>{formData.zipCd}</td>
-                                <th>이메일</th>
-                                <td>{formData.email}</td>
-                            </tr>
-                            <tr>
-                                <th>주소</th>
-                                <td colSpan="3">{formData.addr} {formData.addrDtl}</td>
-                            </tr>
-                            <tr>
-                                <th>가입일</th>
-                                <td colSpan="3">{formData.instDate?.substring(0, 10)}</td>
-                            </tr>
+                            <tr><th>강사명</th><td>{formData.instNm}</td><th>아이디</th><td>{formData.instId}</td></tr>
+                            <tr><th>성별</th><td>{formData.genCd}</td><th>생년월일</th><td>{formData.birthDate}</td></tr>
+                            <tr><th>우편번호</th><td>{formData.zipCd}</td><th>이메일</th><td>{formData.email}</td></tr>
+                            <tr><th>주소</th><td colSpan="3">{formData.addr} {formData.addrDtl}</td></tr>
+                            <tr><th>가입일</th><td colSpan="3">{formData.instDate?.substring(0, 10)}</td></tr>
                             </tbody>
                         </table>
                     )}

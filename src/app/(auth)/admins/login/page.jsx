@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import Swal from "sweetalert2";
 import styles from '@/app/(auth)/admins/login/Login.module.css';
 
 export default function LoginPage() {
@@ -10,6 +11,7 @@ export default function LoginPage() {
     const [errors, setErrors] = useState({});
 
     const processLoginok = async (values) => {
+        console.log(values);
         fetch("http://localhost:8080/api/admins/admin/login", {
             method: "POST",
             headers: {
@@ -23,19 +25,39 @@ export default function LoginPage() {
 
                 if (data.accessToken) {
                     localStorage.setItem("accessToken", data.accessToken);
-                    alert('로그인 성공!!');
-                    location.href = "/admins/dashboard";
+                    Swal.fire({
+                        icon: 'success',
+                        title: '로그인 성공!',
+                        showConfirmButton: false,
+                        timer: 1200
+                    }).then(() => {
+                        location.href = "/admins/dashboard";
+                    });
                 } else {
-                    alert('다시 로그인 하세요!!');
-                    location.href = "/admins/login";
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '토큰 없음',
+                        text: '다시 로그인 해주세요.',
+                    }).then(() => {
+                        location.href = "/admins/login";
+                    });
                 }
 
             } else if (response.status === 401) {
-                alert(await response.text());
+                const message = await response.text();
+                Swal.fire({
+                    icon: 'error',
+                    title: '로그인 실패',
+                    text: message
+                });
             }
         }).catch(error => {
             console.log(error);
-            alert('서버와 통신하는 중 오류가 발생했습니다!!');
+            Swal.fire({
+                icon: 'error',
+                title: '서버 오류',
+                text: '서버와 통신하는 중 오류가 발생했습니다!!'
+            });
         });
     };
 
