@@ -122,52 +122,6 @@ export default function Navbar({ isOpen, toggleNavbar }) {
                         </ul>
                     )}
                 </li>
-
-                {/* 설문관리 */}
-                <li className={styles.menuItem}>
-                    <button
-                        className={styles.menuButton}
-                        onClick={() => toggleMenu('survey')}
-                    >
-                        <FaBook className={styles.icon} /> 설문관리
-                        <span className={styles.chevron}>
-              {openMenus.survey ? <FaChevronUp /> : <FaChevronDown />}
-            </span>
-                    </button>
-                    {openMenus.survey && (
-                        <ul className={styles.submenu}>
-                            <li className={styles.submenuItem}>
-                                <Link
-                                    href="/admins/survey/list"
-                                    className={isActive('/survey/list') ? styles.activeLink : styles.link}
-                                    onClick={toggleNavbar}
-                                >
-                                   설문 관리
-                                </Link>
-                            </li>
-                            <li className={styles.submenuItem}>
-                                <Link
-                                    href="/abc"
-                                    className={isActive('/abc') ? styles.activeLink : styles.link}
-                                    onClick={toggleNavbar}
-                                >
-                                    강의관리
-                                </Link>
-                            </li>
-                        </ul>
-                    )}
-                </li>
-
-                {/* 게시판관리 */}
-                <li className={styles.menuItem}>
-                    <Link
-                        href="/boards"
-                        className={isActive('/boards') ? styles.activeLink : styles.link}
-                        onClick={toggleNavbar}
-                    >
-                        <FaClipboard className={styles.icon} /> 게시판관리
-                    </Link>
-                </li>
             </ul>
         </nav>
     );
